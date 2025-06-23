@@ -15,6 +15,8 @@ const ProductList = ({products}: {products: Promise<Product[]>}) => {
   const allproducts = use(products)
 
   const response = useQuery(GET_USERS, {client})
+  console.log(response);
+  
 
   return (
     <div>

@@ -1,9 +1,21 @@
 "use client"
 import { Product} from "@/types"
+import { gql, useQuery } from "@apollo/client"
 import {use} from "react"
+import client from "@/app/lib/graphql-client"
+
+
+const GET_USERS = gql `
+  query{
+    users
+  }
+`
 
 const ProductList = ({products}: {products: Promise<Product[]>}) => {
   const allproducts = use(products)
+
+  const response = useQuery(GET_USERS, {client})
+
   return (
     <div>
       {allproducts.map((each)=>(

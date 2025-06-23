@@ -21,7 +21,7 @@ const PostsPage = async () => {
               <h2 className="text-xl font-semibold text-gray-800 group-hover:text-blue-600 mb-2 line-clamp-2">
                 {post.title}
               </h2>
-              <p className="text-gray-600 mb-4 line-clamp-3">
+              <p className="text-gray-600 mb-4 line-clamp-4">
                 {post.body}
               </p>
               <div className="flex justify-between items-center text-sm text-gray-500">

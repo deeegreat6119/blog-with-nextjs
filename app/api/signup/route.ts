@@ -7,7 +7,6 @@ export async function POST(request: NextRequest) {
   try {
     await dbConnect();
     const body = await request.json();
-    console.log("Request body:", body); // Add this before your validation check
     const { firstName, lastName, phone, email, password } = body;
 
     if (!firstName || !lastName || !phone || !email || !password) {

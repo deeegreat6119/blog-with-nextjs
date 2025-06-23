@@ -1,3 +1,4 @@
+import "server-only"
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/app/dbConnect";
@@ -24,20 +25,33 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
     }
 
-    // TODO: Implement session or token generation here
     const token = sign(
       {
         userId: user._id,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        role: user.role, // Ensure role is included
       },
       process.env.JWT_SECRET!,
-      { expiresIn: "1h" }
+      { expiresIn: "7d" }
     );
 
-    return NextResponse.json({ token, message: "Signin successful" }, { status: 200 });
+    // Create response with JSON body
+    const response = NextResponse.json(
+      { message: "Signin successful" }, 
+      { status: 200 }
+    );
+
+    // Set the cookie
+    response.cookies.set({
+      name: "token",
+      value: token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60, // 1 hour (matches JWT expiry)
+      path: "/",
+      sameSite: "strict"
+    });
+
+    return response;
   } catch (error) {
     console.error("Signin error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

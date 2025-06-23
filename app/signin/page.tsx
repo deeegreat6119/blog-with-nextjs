@@ -30,14 +30,14 @@ export default function SigninPage() {
 
       const data = await response.json()
 
-if (response.ok) {
-  console.log("Signin successful, token:", data.token);
-  localStorage.setItem("token", data.token);
-  router.push(redirectTo); // Redirect to original path
-} else {
-  console.error("Signin failed:", data.error);
-  setError(data.error || "Signin failed");
-}
+      if (response.ok) {
+        console.log("Signin successful, token:", data.token);
+        localStorage.setItem("token", data.token);
+        router.push(redirectTo); // Redirect to original path
+      } else {
+        console.error("Signin failed:", data.error);
+        setError(data.error || "Signin failed");
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message)

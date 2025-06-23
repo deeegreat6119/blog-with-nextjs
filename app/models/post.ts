@@ -1,17 +1,16 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 
-// 1. Enhanced TypeScript interface
 export interface IPost extends Document {
   title: string;
   body: string;
   more: string;
   time: string;
-  author?: mongoose.Types.ObjectId; // Better typing for references
+  author?: mongoose.Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-// 2. Schema with improved validation
+
 const PostSchema: Schema = new Schema<IPost>({
   title: { 
     type: String, 
@@ -27,10 +26,10 @@ const PostSchema: Schema = new Schema<IPost>({
   },
   author: { 
     type: Schema.Types.ObjectId,
-    ref: 'User' // Proper reference typing
+    ref: 'User'
   }
 }, { 
-  timestamps: true // Auto-add createdAt/updatedAt
+  timestamps: true
 });
 
 // 3. Model creation with type safety
